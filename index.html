@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Athletics | Home</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- High-Energy Fitness Preloader -->
+  <div id="preloader">
+    <div class="loader-element"><img class="loader-logo" src="img/logo.webp" alt="Logo"></div>
+    <div class="loader-pulse" aria-hidden="true">
+      <svg viewBox="0 0 220 44" focusable="false">
+        <path class="loader-pulse-line" pathLength="220" d="M2 22h48l10-1 8-8 9 22 10-34 11 22 8-1h28l8-1 9-8 9 16 10-8h28" />
+      </svg>
+    </div>
+    <div class="loader-progress" role="progressbar" aria-label="Page loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="loading-progress"></span></div>
+    <div class="loader-counter" id="loading-counter">0%</div>
+    <div class="loader-text" id="loading-status">IGNITING SYSTEMS...</div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-container">
+        <img class="site-logo" src="img/logo.webp" alt="Logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="sports.html">Sports</a></li>
+        <li><a href="membership.html">Membership</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-search-item">
+          <form class="nav-search" role="search">
+            <button type="submit" aria-label="Search this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button>
+            <input type="search" name="q" placeholder="Search this page" aria-label="Search this page">
+            <span class="nav-search-status" aria-live="polite"></span>
+          </form>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Join Now</a>
+      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <span class="hero-tag">FITNESS / SPORTS / A HEALTHIER YOU</span>
+        <h1>Build a Stronger, Healthier You</h1>
+        <p>Expert training, personalised programs and a supportive community to help you achieve your fitness and sports goals.</p>
+        <div style="display: flex; gap: 1rem;">
+          <a href="signup.html" class="btn btn-primary">Start Your Journey →</a>
+          <a href="programs.html" class="btn btn-outline" style="background: var(--dark-pill); color: #fff;">Explore Programs</a>
+        </div>
+      </div>
+      <div class="script-tagline">Better Stronger Faster</div>
+      
+      <div class="hero-features-bar">
+        <div class="feature-pill"><div class="feature-icon-circle">🏋️</div><div><strong>Expert Trainer</strong><br><span style="color:#555">Certificate & Experience</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">📋</div><div><strong>Personalized Plans</strong><br><span style="color:#555">For your goals</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">⏱️</div><div><strong>Flexible Schedule</strong><br><span style="color:#555">Train anytime</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">🤝</div><div><strong>Supportive Community</strong><br><span style="color:#555">Grow together</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Our Programs Section -->
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Fitness & Sports Programs</h2>
+      <p>From strength training to sports performance, explore a wide range of programs designed for all fitness levels.</p>
+    </div>
+    <div class="grid-2">
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div class="card" style="padding: 1.5rem; background: var(--dark-pill); border-color: var(--accent-volt);">
+          <h3>Strength Training</h3>
+          <p>Build muscle, increase strength and boost endurance.</p>
+          <a href="programs.html" style="color: var(--accent-volt); font-weight: 600;">View All →</a>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h3>Cardio Fitness</h3>
+          <p>Improve stamina and heart health with guided cardio plans.</p>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h3>Sports Training</h3>
+          <p>Train like a pro. Improve skills and performance.</p>
+        </div>
+        <div class="card" style="padding: 1.5rem;">
+          <h3>HIIT & Functional</h3>
+          <p>Burn calories, build endurance, get results faster.</p>
+        </div>
+      </div>
+      <div class="card" style="display: flex; align-items: center; justify-content: center; position: relative;">
+        <img src="img/danielle-cerullo-CQfNt66ttZM-unsplash.webp" class="card-img" alt="Modern strength-training gym floor" loading="lazy" decoding="async">
+        <div style="position: absolute; bottom: 20px; right: 20px; background: var(--dark-pill); padding: 0.5rem 1rem; border-radius: 8px; font-weight: bold; color: var(--accent-volt);">01 / 04</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Trainers -->
+  <section class="section-container">
+    <div class="section-header" style="display: flex; justify-content: space-between; align-items: flex-end;">
+      <div>
+        <h2>Meet Our Expert Coaches</h2>
+        <p>Learn from certified professionals who are passionate about your success.</p>
+      </div>
+      <a href="dashboard.html#book-trainers" class="btn btn-outline" style="background: var(--surface-slate); color: #fff;">View All Trainers</a>
+    </div>
+    <div class="grid-4">
+      <div class="card">
+        <img src="img/sushil-ghimire-5UbIqV58CW8-unsplash.webp" class="card-img" alt="Athlete training in a strength gym" loading="lazy" decoding="async">
+        <div class="card-body">
+          <h3>Sarah Mitchell</h3>
+          <p>Strength & Conditioning<br>⭐ 4.9 (120 reviews)</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/anastase-maragos-iUzgePOoGko-unsplash.webp" class="card-img" alt="Athlete preparing for a sports performance workout" loading="lazy" decoding="async">
+        <div class="card-body">
+          <h3>James Carter</h3>
+          <p>Sports Performance<br>⭐ 4.4 (100 reviews)</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/bruce-mars-gJtDg6WfMlQ-unsplash.webp" class="card-img" alt="Athletes practicing yoga and mobility" loading="lazy" decoding="async">
+        <div class="card-body">
+          <h3>Priya Sharma</h3>
+          <p>Yoga & Mobility<br>⭐ 4.9 (80 reviews)</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="img/total-shape-wXBK9JrM0iU-unsplash.webp" class="card-img" alt="Athlete training with functional fitness equipment" loading="lazy" decoding="async">
+        <div class="card-body">
+          <h3>David Wilson</h3>
+          <p>HIIT & Functional<br>⭐ 4.7 (160 reviews)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Membership Plans -->
+  <section class="section-container">
+    <div class="section-header" style="text-align: center;">
+      <h2>Choose Your Plan</h2>
+      <p>Flexible plans for every goal. Get started today and become a stronger, healthier you.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div>
+          <h3>Basic</h3>
+          <p>Perfect for getting started.</p>
+          <div class="price">$49<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>Access to gym facilities</li>
+            <li>Basic fitness programs</li>
+            <li>Community support</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Basic" class="btn btn-outline" style="width: 100%; justify-content: center; background: #fff; color: #000;">Select Plan</a>
+      </div>
+      <div class="pricing-card emphasised">
+        <div>
+          <h3>Pro</h3>
+          <p>For serious fitness & sports goals.</p>
+          <div class="price">$79<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>All Basic features</li>
+            <li>Personalised workout plan</li>
+            <li>1-on-1 trainer support</li>
+            <li>Priority booking</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Pro" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--accent-volt); color: #000;">Select Plan</a>
+      </div>
+      <div class="pricing-card">
+        <div>
+          <h3>Premium</h3>
+          <p>For the complete experience.</p>
+          <div class="price">$99<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>All Pro features</li>
+            <li>Unlimited classes</li>
+            <li>Exclusive events</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Premium" class="btn btn-outline" style="width: 100%; justify-content: center; background: #fff; color: #000;">Select Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section-container">
+    <div class="section-header">
+      <h2>Real People. Real Results.</h2>
+      <p>Join thousands of members who have transformed their lives.</p>
+    </div>
+    <div class="grid-3">
+      <div class="card" style="padding: 2rem;">
+        <p style="color: var(--text-main); font-style: italic; margin-bottom: 1.5rem;">"Completely changed my fitness journey. The trainers are amazing and the community is so supportive."</p>
+        <strong>Emily Carter</strong><br><span style="color: var(--text-muted); font-size: 0.85rem;">Member for 6 Months</span><br>⭐⭐⭐⭐⭐
+      </div>
+      <div class="card" style="padding: 2rem;">
+        <p style="color: var(--text-main); font-style: italic; margin-bottom: 1.5rem;">"The personalised plan helped me improve my performance and build confidence. Highly recommended."</p>
+        <strong>Michael Brown</strong><br><span style="color: var(--text-muted); font-size: 0.85rem;">Member for 1 Year</span><br>⭐⭐⭐⭐⭐
+      </div>
+      <div class="card" style="padding: 2rem;">
+        <p style="color: var(--text-main); font-style: italic; margin-bottom: 1.5rem;">"Great facilities, professional coaches and a positive environment."</p>
+        <strong>Sophia Reed</strong><br><span style="color: var(--text-muted); font-size: 0.85rem;">Member for 8 Months</span><br>⭐⭐⭐⭐⭐
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img class="site-logo" src="img/logo.webp" alt="Logo">
+        <p class="footer-quote">Train with purpose. Build strength for life.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="sports.html">Sports</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="dashboard.html#faq">Help Center</a></li>
+          <li><a href="dashboard.html#contact-support">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="18" cy="6" r="1" fill="currentColor" stroke="none"></circle></svg></a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8ZM22 14.3c0-4-2.1-5.9-4.9-5.9a4.2 4.2 0 0 0-3.8 2.1V8.6h-3.1V22h3.2v-6.6c0-1.7.3-3.4 2.5-3.4s2.2 2 2.2 3.5V22h3.2l.7-7.7Z"></path></svg></a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg class="icon-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-9h3l.5-3.5h-3.5V7.3c0-1 .3-1.7 1.8-1.7h1.9V2.5c-.9-.1-1.9-.2-2.9-.2-2.9 0-4.9 1.8-4.9 5v2.2H6.2V13h3.2v9h4.1Z"></path></svg></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"></rect><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"></path></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; <span id="footer-year">2026</span> Pulse Athletics. All Rights Reserved.</p>
+      <nav class="footer-legal" aria-label="Legal links">
+        <a href="dashboard.html#terms">Terms</a>
+        <a href="dashboard.html#privacy">Privacy</a>
+        <a href="dashboard.html#cookies">Cookies</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

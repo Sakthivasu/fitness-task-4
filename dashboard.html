@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0A0A0C">
+  <title>Pulse Athletics | Member Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    body { min-height: 100vh; }
+    .dashboard-layout { min-height: 100vh; display: grid; grid-template-columns: 260px minmax(0, 1fr); }
+    .sidebar { position: sticky; top: 0; height: 100vh; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 1.5rem; background: var(--surface-slate); border-right: 1px solid var(--border-glass); }
+    .sidebar-brand { padding: 0 .65rem; }
+    .sidebar-menu { display: grid; gap: .3rem; }
+    .sidebar-menu button { display: flex; align-items: center; gap: .7rem; width: 100%; padding: .75rem .85rem; color: var(--text-muted); background: transparent; border: 0; border-radius: 9px; text-align: left; font: inherit; font-size: .9rem; font-weight: 600; cursor: pointer; transition: var(--transition-smooth); }
+    .sidebar-menu button:hover, .sidebar-menu button.active { color: var(--accent-volt); background: var(--surface-card); }
+    .sidebar-menu .sidebar-label { padding: .55rem .85rem .25rem; color: #788294; font-size: .68rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .sidebar-bottom { display: grid; gap: .55rem; margin-top: auto; }
+    .sidebar-bottom a { padding: .55rem .75rem; color: var(--text-muted); font-weight: 600; }
+    .sidebar-bottom a:last-child { color: #ff7777; }
+    .dashboard-main { min-width: 0; padding: 2rem clamp(1rem, 3vw, 3rem); }
+    .dashboard-topbar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .dashboard-topbar h1 { font-size: clamp(1.7rem, 3vw, 2.4rem); line-height: 1.2; }
+    .dashboard-topbar p, .muted { color: var(--text-muted); }
+    .dashboard-date { color: var(--accent-volt) !important; font-size: .85rem; font-weight: 700; }
+    .dashboard-view[hidden] { display: none; }
+    .view-intro { margin-bottom: 1.25rem; }
+    .view-intro h2 { font-size: 1.5rem; }
+    .view-intro p { margin-top: .25rem; color: var(--text-muted); }
+    .dashboard-section { margin-top: 1.5rem; }
+    .dashboard-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+    .dashboard-card { min-width: 0; padding: 1.2rem; background: var(--surface-slate); border: 1px solid var(--border-glass); border-radius: 16px; }
+    .metric-label { color: var(--text-muted); font-size: .82rem; font-weight: 600; }
+    .metric-value { margin-top: .45rem; color: var(--accent-volt); font-size: clamp(1.45rem, 2vw, 1.9rem); font-weight: 800; line-height: 1.15; }
+    .metric-note { margin-top: .45rem; color: #94a3b8; font-size: .8rem; }
+    .dashboard-columns { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr); gap: 1rem; }
+    .profile-card { display: flex; gap: 1rem; align-items: center; }
+    .profile-avatar { width: 56px; height: 56px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 50%; color: var(--accent-volt); background: rgba(208,255,0,.12); font-size: 1.2rem; font-weight: 800; }
+    .profile-details { display: grid; grid-template-columns: repeat(3, 1fr); gap: .65rem; margin-top: 1rem; }
+    .profile-detail { padding: .7rem; border-radius: 9px; background: var(--bg-void); }
+    .profile-detail strong, .profile-detail span { display: block; }
+    .profile-detail span { color: var(--text-muted); font-size: .73rem; }
+    .progress-track { height: 8px; overflow: hidden; margin-top: .75rem; border-radius: 99px; background: #292a31; }
+    .progress-track span { display: block; width: 0; height: 100%; border-radius: inherit; background: var(--accent-volt); }
+    .dashboard-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .9rem; }
+    .dashboard-field { display: grid; gap: .4rem; }
+    .dashboard-field label { color: var(--text-muted); font-size: .82rem; font-weight: 600; }
+    .dashboard-field input, .dashboard-field select, .dashboard-field textarea { width: 100%; min-height: 44px; padding: .65rem .75rem; color: var(--text-main); background: var(--bg-void); border: 1px solid var(--border-glass); border-radius: 8px; font: inherit; }
+    .dashboard-field textarea { min-height: 140px; resize: vertical; }
+    .dashboard-field input:focus, .dashboard-field select:focus, .dashboard-field textarea:focus { outline: 2px solid rgba(208,255,0,.4); border-color: var(--accent-volt); }
+    .form-wide { grid-column: 1 / -1; }
+    .dashboard-button { justify-content: center; color: var(--bg-void); background: var(--accent-volt); }
+    .dashboard-list { display: grid; gap: .65rem; margin-top: 1rem; }
+    .dashboard-row { display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: .85rem; background: var(--bg-void); border: 1px solid var(--border-glass); border-radius: 10px; }
+    .dashboard-row strong, .dashboard-row small { display: block; }
+    .dashboard-row small { color: var(--text-muted); }
+    .row-meta { display: flex; align-items: center; gap: .7rem; text-align: right; white-space: nowrap; color: var(--accent-volt); font-size: .83rem; font-weight: 700; }
+    .remove-button { padding: .35rem .55rem; color: #ff8a8a; background: transparent; border: 1px solid rgba(255,138,138,.35); border-radius: 7px; cursor: pointer; }
+    .empty-state { padding: 1rem; color: var(--text-muted); text-align: center; border: 1px dashed var(--border-glass); border-radius: 10px; }
+    .calendar-controls { display: flex; gap: .5rem; }
+    .calendar-controls button { width: 36px; height: 36px; color: var(--text-main); background: var(--bg-void); border: 1px solid var(--border-glass); border-radius: 8px; cursor: pointer; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: .35rem; margin-top: 1rem; }
+    .calendar-weekday, .calendar-day { min-height: 38px; display: grid; place-items: center; color: var(--text-muted); font-size: .78rem; }
+    .calendar-weekday { min-height: 26px; font-size: .68rem; font-weight: 800; text-transform: uppercase; }
+    .calendar-day { position: relative; color: var(--text-main); background: var(--bg-void); border: 1px solid transparent; border-radius: 8px; cursor: pointer; }
+    .calendar-day:hover, .calendar-day.selected { border-color: var(--accent-volt); }
+    .calendar-day.today { color: var(--accent-volt); font-weight: 800; }
+    .calendar-day.has-event::after { position: absolute; bottom: 3px; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-volt); content: ""; }
+    .calendar-day.outside-month { opacity: .35; }
+    .calendar-selection, .dashboard-notice { min-height: 1.4rem; margin-top: .7rem; color: var(--text-muted); font-size: .84rem; }
+    .dashboard-notice { color: var(--accent-volt); }
+    .trainer-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+    .trainer-card h3 { margin-bottom: .35rem; }
+    .trainer-card p { color: var(--text-muted); font-size: .88rem; }
+    .trainer-img { width: 100%; height: 150px; margin-bottom: .8rem; object-fit: cover; border-radius: 10px; }
+    .trainer-card .btn { margin-top: .9rem; }
+    .faq-list { display: grid; gap: .75rem; }
+    .faq-item { overflow: hidden; color: var(--text-main); background: var(--surface-slate); border: 1px solid var(--border-glass); border-radius: 12px; }
+    .faq-question { display: flex; justify-content: space-between; width: 100%; padding: 1rem 1.1rem; color: inherit; background: transparent; border: 0; text-align: left; font: inherit; font-weight: 700; cursor: pointer; }
+    .faq-answer { display: none; padding: 0 1.1rem 1rem; color: var(--text-muted); }
+    .faq-item.active { border-color: var(--accent-volt); }
+    .faq-item.active .faq-answer { display: block; }
+    .terms-list { display: grid; gap: 1.2rem; }
+    .terms-list h3 { margin-bottom: .35rem; color: var(--accent-volt); font-size: 1rem; }
+    .terms-list p { color: var(--text-muted); }
+    .plan-summary { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .plan-price { color: var(--accent-volt); font-size: 1.8rem; font-weight: 800; }
+    .mobile-menu-toggle { display: none; }
+    @media (max-width: 1100px) {
+      .dashboard-layout { grid-template-columns: 220px minmax(0, 1fr); }
+      .dashboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .dashboard-columns { grid-template-columns: 1fr; }
+      .trainer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .dashboard-layout { display: block; }
+      .sidebar { position: sticky; z-index: 20; height: auto; padding: .7rem 1rem; border-right: 0; border-bottom: 1px solid var(--border-glass); }
+      .sidebar-brand { display: flex; justify-content: space-between; align-items: center; padding: 0; }
+      .sidebar-brand .logo-container { font-size: 1rem; }
+      .mobile-menu-toggle { display: inline-flex; min-height: 40px; align-items: center; padding: .5rem .75rem; color: var(--text-main); background: var(--surface-card); border: 1px solid var(--border-glass); border-radius: 8px; }
+      .sidebar-menu, .sidebar-bottom { display: none; }
+      .sidebar.menu-open .sidebar-menu { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: .8rem; }
+      .sidebar.menu-open .sidebar-bottom { display: flex; justify-content: space-between; margin-top: .3rem; }
+      .sidebar-menu .sidebar-label { grid-column: 1 / -1; }
+      .dashboard-main { padding: 1.25rem 1rem 2rem; }
+      .dashboard-topbar { align-items: flex-start; }
+      .dashboard-topbar .btn { padding: .55rem .75rem; white-space: nowrap; }
+    }
+    @media (max-width: 480px) {
+      .dashboard-grid { gap: .6rem; }
+      .dashboard-card { padding: 1rem; }
+      .profile-details { gap: .4rem; }
+      .profile-detail { padding: .5rem; }
+      .dashboard-form { grid-template-columns: 1fr; }
+      .form-wide { grid-column: auto; }
+      .trainer-grid { grid-template-columns: 1fr; }
+      .dashboard-row { align-items: flex-start; }
+      .calendar-grid { gap: .2rem; }
+      .calendar-day { min-height: 34px; }
+      .dashboard-topbar p { font-size: .84rem; }
+    }
+  </style>
+</head>
+<body>
+  <div id="preloader">
+    <div class="loader-element"><img class="loader-logo" src="img/logo.webp" alt="Logo"></div>
+    <div class="loader-pulse" aria-hidden="true">
+      <svg viewBox="0 0 220 44" focusable="false">
+        <path class="loader-pulse-line" pathLength="220" d="M2 22h48l10-1 8-8 9 22 10-34 11 22 8-1h28l8-1 9-8 9 16 10-8h28" />
+      </svg>
+    </div>
+    <div class="loader-progress" role="progressbar" aria-label="Page loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="loading-progress"></span></div>
+    <div class="loader-counter" id="loading-counter">0%</div>
+    <div class="loader-text" id="loading-status">LOADING MEMBER SPACE...</div>
+  </div>
+  <div class="dashboard-layout">
+    <aside class="sidebar" id="dashboard-sidebar">
+      <div class="sidebar-brand">
+        <div class="logo-container"><img class="site-logo" src="img/logo.webp" alt="Logo"></div>
+        <button class="mobile-menu-toggle" id="sidebar-toggle" type="button" aria-expanded="false" aria-controls="dashboard-nav">Menu</button>
+      </div>
+      <nav class="sidebar-menu" id="dashboard-nav" aria-label="Member dashboard tabs" role="tablist" aria-orientation="vertical">
+        <span class="sidebar-label">Member space</span>
+        <button type="button" class="active" role="tab" id="nav-overview" aria-controls="overview" aria-selected="true" data-tab="overview">▦ <span>Overview</span></button>
+        <button type="button" role="tab" id="nav-workouts" aria-controls="workouts" aria-selected="false" data-tab="workouts">◉ <span>Workouts</span></button>
+        <button type="button" role="tab" id="nav-book-trainers" aria-controls="book-trainers" aria-selected="false" data-tab="book-trainers">♧ <span>Book Trainers</span></button>
+        <button type="button" role="tab" id="nav-schedule" aria-controls="schedule" aria-selected="false" data-tab="schedule">▦ <span>Schedule</span></button>
+        <span class="sidebar-label">Account & help</span>
+        <button type="button" role="tab" id="nav-contact-support" aria-controls="contact-support" aria-selected="false" data-tab="contact-support">✉ <span>Contact Support</span></button>
+        <button type="button" role="tab" id="nav-faq" aria-controls="faq" aria-selected="false" data-tab="faq">? <span>FAQ</span></button>
+        <button type="button" role="tab" id="nav-membership" aria-controls="membership" aria-selected="false" data-tab="membership">◇ <span>Membership</span></button>
+        <button type="button" role="tab" id="nav-terms" aria-controls="terms" aria-selected="false" data-tab="terms">§ <span>Terms</span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a href="index.html">← Back to Home</a>
+        <a href="login.html">Log out</a>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <div class="dashboard-topbar">
+        <div>
+          <p class="dashboard-date" id="dashboard-date"></p>
+          <h1>Welcome back, <span id="welcome-name">Member</span></h1>
+          <p>Your training progress, schedule, and membership at a glance.</p>
+        </div>
+        <a href="login.html" class="btn btn-outline">Log out</a>
+      </div>
+
+      <section class="dashboard-view" id="overview" role="tabpanel" aria-labelledby="nav-overview">
+        <div class="dashboard-grid" aria-label="Fitness metrics">
+          <article class="dashboard-card"><div class="metric-label">Workout streak</div><div class="metric-value" id="streak-value">0 days</div><div class="metric-note">Consecutive active days</div></article>
+          <article class="dashboard-card"><div class="metric-label">Sessions this month</div><div class="metric-value" id="sessions-value">0</div><div class="metric-note">Logged workouts</div></article>
+          <article class="dashboard-card"><div class="metric-label">Calories this month</div><div class="metric-value" id="calories-value">0 kcal</div><div class="metric-note">Estimated from your logs</div></article>
+          <article class="dashboard-card"><div class="metric-label">Membership</div><div class="metric-value" id="membership-value">Pro</div><div class="metric-note">Manage your plan in this dashboard</div></article>
+        </div>
+        <div class="dashboard-columns dashboard-section">
+          <article class="dashboard-card">
+            <div class="profile-card"><div class="profile-avatar" id="profile-initials" aria-hidden="true">M</div><div><h2 id="profile-name">Member</h2><p class="muted" id="profile-email">member@pulseathletics.com</p></div></div>
+            <div class="profile-details">
+              <div class="profile-detail"><strong id="profile-weight">72 kg</strong><span>Weight</span></div>
+              <div class="profile-detail"><strong id="profile-height">175 cm</strong><span>Height</span></div>
+              <div class="profile-detail"><strong id="profile-goal">Build strength</strong><span>Current goal</span></div>
+            </div>
+          </article>
+          <article class="dashboard-card">
+            <div class="metric-label">Monthly goal</div>
+            <div class="metric-value"><span id="goal-count">0</span><span style="font-size:1rem;color:var(--text-muted)"> / 12 sessions</span></div>
+            <div class="progress-track" role="progressbar" aria-label="Monthly workout goal" aria-valuemin="0" aria-valuemax="12" aria-valuenow="0" id="goal-progress"><span></span></div>
+            <p class="metric-note" id="goal-note">Record training sessions to track monthly progress.</p>
+          </article>
+        </div>
+        <article class="dashboard-card dashboard-section">
+          <div class="view-intro"><h2>Account settings</h2><p>Update your member profile on this device.</p></div>
+          <form class="dashboard-form" id="settings-form">
+            <div class="dashboard-field"><label for="member-name">Name</label><input id="member-name" name="name" type="text" maxlength="60" required></div>
+            <div class="dashboard-field"><label for="member-email">Email</label><input id="member-email" name="email" type="email" maxlength="120" required></div>
+            <div class="dashboard-field"><label for="member-weight">Weight (kg)</label><input id="member-weight" name="weight" type="number" min="1" max="500" required></div>
+            <div class="dashboard-field"><label for="member-height">Height (cm)</label><input id="member-height" name="height" type="number" min="50" max="300" required></div>
+            <div class="dashboard-field form-wide"><label for="member-goal">Fitness goal</label><input id="member-goal" name="goal" type="text" maxlength="60" required></div>
+            <button type="submit" class="btn dashboard-button form-wide">Save profile</button>
+          </form>
+          <p class="dashboard-notice" id="settings-notice" role="status" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <section class="dashboard-view" id="workouts" role="tabpanel" aria-labelledby="nav-workouts" hidden>
+        <div class="view-intro"><h2>Workouts</h2><p>Record sessions, review your progress, and mark training days on your calendar.</p></div>
+        <article class="dashboard-card">
+          <form class="dashboard-form" id="workout-form">
+            <div class="dashboard-field"><label for="workout-name">Workout</label><input id="workout-name" name="name" type="text" maxlength="60" placeholder="Strength training" required></div>
+            <div class="dashboard-field"><label for="workout-type">Training type</label><select id="workout-type" name="type"><option>Strength</option><option>Cardio</option><option>Mobility</option><option>Sports</option><option>Other</option></select></div>
+            <div class="dashboard-field"><label for="workout-duration">Duration (minutes)</label><input id="workout-duration" name="duration" type="number" min="1" max="600" required></div>
+            <div class="dashboard-field"><label for="workout-calories">Calories (estimate)</label><input id="workout-calories" name="calories" type="number" min="0" max="10000" required></div>
+            <div class="dashboard-field form-wide"><label for="workout-date">Workout date</label><input id="workout-date" name="date" type="date" required></div>
+            <button type="submit" class="btn dashboard-button form-wide">Save workout</button>
+          </form>
+          <p class="dashboard-notice" id="workout-notice" role="status" aria-live="polite"></p>
+          <div class="dashboard-list" id="workout-list" aria-live="polite"></div>
+        </article>
+      </section>
+
+      <section class="dashboard-view" id="book-trainers" role="tabpanel" aria-labelledby="nav-book-trainers" hidden>
+        <div class="view-intro"><h2>Book Trainers</h2><p>Choose a coach and request a personal training session.</p></div>
+        <div class="trainer-grid" id="trainer-grid">
+          <article class="dashboard-card trainer-card" data-trainer="Sarah Mitchell"><img class="trainer-img" src="img/sushil-ghimire-5UbIqV58CW8-unsplash.webp" alt="Athlete training for strength"><h3>Sarah Mitchell</h3><p>Strength & Conditioning · 4.9 ★ (120 reviews)</p><p>Strength programming, form coaching, and progressive plans.</p><button class="btn btn-primary choose-trainer" type="button">Book Sarah</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="James Carter"><img class="trainer-img" src="img/pexels-franco-monsalvo-252430633-32179310.webp" alt="Football players training on the field"><h3>James Carter</h3><p>Sports Performance · 4.4 ★ (100 reviews)</p><p>Speed, agility, and sport-specific performance training.</p><button class="btn btn-primary choose-trainer" type="button">Book James</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="Priya Sharma"><img class="trainer-img" src="img/bruce-mars-gJtDg6WfMlQ-unsplash.webp" alt="Group yoga and mobility training"><h3>Priya Sharma</h3><p>Yoga & Mobility · 4.9 ★ (80 reviews)</p><p>Mobility, balance, recovery, and mindful movement.</p><button class="btn btn-primary choose-trainer" type="button">Book Priya</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="David Wilson"><img class="trainer-img" src="img/total-shape-wXBK9JrM0iU-unsplash.webp" alt="Athlete performing a functional gym workout"><h3>David Wilson</h3><p>HIIT & Functional · 4.7 ★ (160 reviews)</p><p>Conditioning workouts and functional strength sessions.</p><button class="btn btn-primary choose-trainer" type="button">Book David</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="Alex Turner"><img class="trainer-img" src="img/andrew-valdivia-lJpkdx-bNc0-unsplash.webp" alt="Athlete training with a loaded barbell"><h3>Alex Turner</h3><p>CrossFit & Agility · 4.8 ★ (95 reviews)</p><p>Agility, athletic conditioning, and high-intensity training.</p><button class="btn btn-primary choose-trainer" type="button">Book Alex</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="Marcus Vance"><img class="trainer-img" src="img/anastase-maragos-iUzgePOoGko-unsplash.webp" alt="Athlete training in a strength gym"><h3>Marcus Vance</h3><p>Boxing & Combat · 4.9 ★ (140 reviews)</p><p>Boxing technique, conditioning, and combat-sport fundamentals.</p><button class="btn btn-primary choose-trainer" type="button">Book Marcus</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="Elena Rostova"><img class="trainer-img" src="img/logan-weaver-lgnwvr-u76Gd0hP5w4-unsplash.webp" alt="Athletes practicing mobility and stretching"><h3>Elena Rostova</h3><p>Pilates & Core Specialist · 4.9 ★ (110 reviews)</p><p>Core stability, Pilates fundamentals, and controlled strength.</p><button class="btn btn-primary choose-trainer" type="button">Book Elena</button></article>
+          <article class="dashboard-card trainer-card" data-trainer="Ryan Reynolds"><img class="trainer-img" src="img/clem-onojeghuo-n6gnCa77Urc-unsplash.webp" alt="Runner training for endurance"><h3>Ryan Reynolds</h3><p>Endurance & Marathon Coach · 4.6 ★ (75 reviews)</p><p>Endurance coaching and progressive marathon preparation.</p><button class="btn btn-primary choose-trainer" type="button">Book Ryan</button></article>
+        </div>
+        <article class="dashboard-card dashboard-section">
+          <div class="view-intro"><h3>Request a session</h3><p>Bookings are saved in this browser for this demo.</p></div>
+          <form class="dashboard-form" id="booking-form">
+            <div class="dashboard-field"><label for="booking-trainer">Trainer</label><select id="booking-trainer" name="trainer" required><option value="">Choose a trainer</option><option>Sarah Mitchell</option><option>James Carter</option><option>Priya Sharma</option><option>David Wilson</option><option>Alex Turner</option><option>Marcus Vance</option><option>Elena Rostova</option><option>Ryan Reynolds</option></select></div>
+            <div class="dashboard-field"><label for="booking-type">Session focus</label><select id="booking-type" name="type"><option>Personal training</option><option>Strength assessment</option><option>Mobility session</option><option>Performance coaching</option></select></div>
+            <div class="dashboard-field"><label for="booking-date">Date</label><input id="booking-date" name="date" type="date" required></div>
+            <div class="dashboard-field"><label for="booking-time">Time</label><input id="booking-time" name="time" type="time" required></div>
+            <button type="submit" class="btn dashboard-button form-wide">Request booking</button>
+          </form>
+          <p class="dashboard-notice" id="booking-notice" role="status" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <section class="dashboard-view" id="schedule" role="tabpanel" aria-labelledby="nav-schedule" hidden>
+        <div class="view-intro"><h2>Schedule</h2><p>Your training sessions, trainer bookings, and workout calendar.</p></div>
+        <div class="dashboard-columns">
+          <article class="dashboard-card">
+            <div class="plan-summary"><h3 id="calendar-month">Calendar</h3><div class="calendar-controls"><button type="button" id="calendar-prev" aria-label="Previous month">‹</button><button type="button" id="calendar-next" aria-label="Next month">›</button></div></div>
+            <div class="calendar-grid" id="calendar-grid" role="grid" aria-label="Workout and booking calendar"></div>
+            <p class="calendar-selection" id="calendar-selection" aria-live="polite"></p>
+          </article>
+          <article class="dashboard-card"><h3>Upcoming sessions</h3><p class="metric-note">Trainer bookings and scheduled activities appear here.</p><div class="dashboard-list" id="schedule-list"></div></article>
+        </div>
+        <article class="dashboard-card dashboard-section">
+          <div class="view-intro"><h3>Add a personal schedule item</h3><p>Keep classes and arena reservations together with your training calendar.</p></div>
+          <form class="dashboard-form" id="schedule-form">
+            <div class="dashboard-field"><label for="schedule-title">Activity</label><input id="schedule-title" name="title" type="text" maxlength="60" placeholder="e.g. Tennis practice" required></div>
+            <div class="dashboard-field"><label for="schedule-type">Activity type</label><select id="schedule-type" name="type"><option>Training session</option><option>Arena reservation</option><option>Fitness class</option><option>Recovery</option></select></div>
+            <div class="dashboard-field"><label for="schedule-date">Date</label><input id="schedule-date" name="date" type="date" required></div>
+            <div class="dashboard-field"><label for="schedule-time">Time</label><input id="schedule-time" name="time" type="time" required></div>
+            <button type="submit" class="btn dashboard-button form-wide">Add to schedule</button>
+          </form>
+          <p class="dashboard-notice" id="schedule-notice" role="status" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <section class="dashboard-view" id="contact-support" role="tabpanel" aria-labelledby="nav-contact-support" hidden>
+        <div class="view-intro"><h2>Contact Support</h2><p>Send a message about your account, training, or membership.</p></div>
+        <div class="dashboard-columns">
+          <article class="dashboard-card">
+            <form class="dashboard-form" id="contact-form">
+              <div class="dashboard-field"><label for="contact-name">Your name</label><input id="contact-name" name="name" type="text" maxlength="80" required></div>
+              <div class="dashboard-field"><label for="contact-email">Email address</label><input id="contact-email" name="email" type="email" maxlength="120" required></div>
+              <div class="dashboard-field form-wide"><label for="contact-topic">Topic</label><select id="contact-topic" name="topic"><option>Membership</option><option>Training</option><option>Schedule or booking</option><option>Account help</option><option>Other</option></select></div>
+              <div class="dashboard-field form-wide"><label for="contact-message">Message</label><textarea id="contact-message" name="message" maxlength="2000" required></textarea></div>
+              <button type="submit" class="btn dashboard-button form-wide">Save message</button>
+            </form>
+            <p class="dashboard-notice" id="contact-notice" role="status" aria-live="polite"></p>
+          </article>
+          <aside class="dashboard-card"><h3>Support details</h3><p class="metric-note">Use the form to record your support request.</p><p class="metric-note">This demo stores messages only in this browser; no message is sent to a support team.</p></aside>
+        </div>
+      </section>
+
+      <section class="dashboard-view" id="faq" role="tabpanel" aria-labelledby="nav-faq" hidden>
+        <div class="view-intro"><h2>Help Center & FAQ</h2><p>Answers about memberships, training sessions, bookings, and your account.</p></div>
+        <div class="faq-list">
+          <article class="faq-item active"><button class="faq-question" type="button" aria-expanded="true">Can I cancel my membership anytime?<span>+</span></button><div class="faq-answer">You can manage membership changes from this dashboard. Contact support if you need help with your current billing period.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Do you offer a free trial?<span>+</span></button><div class="faq-answer">New members can explore facilities, classes, and trainer options during a 7-day trial, subject to availability.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false">What payment options are available?<span>+</span></button><div class="faq-answer">Membership payment options include major credit and debit cards, UPI, and net banking.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Is there a joining fee?<span>+</span></button><div class="faq-answer">There are no joining fees for standard membership plans.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Are personal trainers included?<span>+</span></button><div class="faq-answer">Trainer access depends on your plan. Use Book Trainers in this dashboard to explore coaches and request a session.</div></article>
+          <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false">Where can I see my bookings?<span>+</span></button><div class="faq-answer">Your trainer bookings and scheduled activities appear in the Schedule tab. You can remove a booking there if plans change.</div></article>
+        </div>
+      </section>
+
+      <section class="dashboard-view" id="membership" role="tabpanel" aria-labelledby="nav-membership" hidden>
+        <div class="view-intro"><h2>Membership</h2><p>Review your current membership details in your member space.</p></div>
+        <article class="dashboard-card">
+          <div class="plan-summary"><div><p class="metric-label">Current plan</p><h3 id="plan-name">Pro Member</h3><p class="metric-note" id="plan-benefits">Personal trainer support and group classes</p></div><span class="plan-price">Active</span></div>
+          <div class="profile-details"><div class="profile-detail"><strong>Monthly</strong><span>Billing cycle</span></div><div class="profile-detail"><strong id="plan-trainer-access">Included</strong><span>Trainer access</span></div><div class="profile-detail"><strong id="plan-classes">Included</strong><span>Group classes</span></div></div>
+          <form class="dashboard-form dashboard-section" id="membership-form">
+            <div class="dashboard-field">
+              <label for="membership-plan">Plan preference</label>
+              <select id="membership-plan" name="plan"><option>Basic</option><option>Pro</option><option>Premium</option></select>
+            </div>
+            <button type="submit" class="btn dashboard-button">Save plan preference</button>
+          </form>
+          <p class="dashboard-notice" id="membership-notice" role="status" aria-live="polite"></p>
+        </article>
+      </section>
+
+      <section class="dashboard-view" id="terms" role="tabpanel" aria-labelledby="nav-terms" hidden>
+        <div class="view-intro"><h2>Terms & Conditions</h2><p>Terms for using Pulse Athletics memberships, facilities, and services.</p></div>
+        <article class="dashboard-card terms-list">
+          <div><h3>1. Membership & Billing</h3><p>Memberships are billed on a recurring monthly or annual basis depending on the plan selected. Cancellation requests should be submitted before the next billing cycle.</p></div>
+          <div><h3>2. Facility Rules & Safety</h3><p>Members must follow facility safety protocols, wear appropriate attire, and treat other members and staff respectfully. Rule violations may result in account suspension.</p></div>
+          <div><h3>3. Exercise & Liability</h3><p>Physical exercise and sports involve inherent risks. Members should choose activities appropriate to their health and ability and seek professional medical advice when needed.</p></div>
+          <div id="privacy"><h3>Privacy</h3><p>This static demo stores profile details, bookings, and workout logs in your browser using local storage. This information is not transmitted to a server.</p></div>
+          <div id="cookies"><h3>Cookies</h3><p>This demo does not set tracking cookies. Browser local storage is used to remember your dashboard data on this device.</p></div>
+        </article>
+      </section>
+    </main>
+  </div>
+  <footer>
+    <div class="footer-container footer-dashboard-container">
+      <div class="footer-brand">
+        <img class="site-logo" src="img/logo.webp" alt="Logo">
+        <p class="footer-quote">Train with purpose. Build strength for life.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; <span id="footer-year">2026</span> Pulse Athletics. All Rights Reserved.</p>
+      <nav class="footer-legal" aria-label="Legal links">
+        <a href="#terms">Terms</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#cookies">Cookies</a>
+      </nav>
+    </div>
+  </footer>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

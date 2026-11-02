@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulse Athletics | Membership</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-element"><img class="loader-logo" src="img/logo.webp" alt="Logo"></div>
+    <div class="loader-pulse" aria-hidden="true">
+      <svg viewBox="0 0 220 44" focusable="false">
+        <path class="loader-pulse-line" pathLength="220" d="M2 22h48l10-1 8-8 9 22 10-34 11 22 8-1h28l8-1 9-8 9 16 10-8h28" />
+      </svg>
+    </div>
+    <div class="loader-progress" role="progressbar" aria-label="Page loading" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="loading-progress"></span></div>
+    <div class="loader-counter" id="loading-counter">0%</div>
+    <div class="loader-text" id="loading-status">LOADING MEMBERSHIP...</div>
+  </div>
+
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-container">
+        <img class="site-logo" src="img/logo.webp" alt="Logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="sports.html">Sports</a></li>
+        <li><a href="membership.html" class="active">Membership</a></li>
+        <li><a href="about.html">About</a></li>
+        <li class="nav-search-item">
+          <form class="nav-search" role="search">
+            <button type="submit" aria-label="Search this page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg></button>
+            <input type="search" name="q" placeholder="Search this page" aria-label="Search this page">
+            <span class="nav-search-status" aria-live="polite"></span>
+          </form>
+        </li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline">Login</a>
+        <a href="signup.html" class="btn btn-primary">Join Now</a>
+      </div>
+      <div class="hamburger"><span></span><span></span><span></span></div>
+    </div>
+  </header>
+
+  <section class="hero-section">
+    <div class="hero-banner">
+      <div class="hero-content">
+        <span class="hero-tag">MEMBERSHIP / PLANS</span>
+        <h1>Flexible Plans for Every Goal</h1>
+        <p>Choose a membership plan that fits your lifestyle and goals. Get access to world-class facilities, expert trainers and personalised support.</p>
+        <a href="#plans-section" class="btn btn-primary" style="background: var(--dark-pill); color: #fff;">View Plans →</a>
+      </div>
+      <div class="script-tagline">Your Fitness Journey Starts Here</div>
+      <div class="hero-features-bar">
+        <div class="feature-pill"><div class="feature-icon-circle">🏋️</div><div><strong>Expert Trainer</strong><br><span style="color:#555">Certificate & Experience</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">📋</div><div><strong>Personalized Plans</strong><br><span style="color:#555">For your goals</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">⏱️</div><div><strong>Flexible Schedule</strong><br><span style="color:#555">Train anytime</span></div></div>
+        <div class="feature-pill"><div class="feature-icon-circle">🤝</div><div><strong>Supportive Community</strong><br><span style="color:#555">Grow together</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans Section -->
+  <section class="section-container" id="plans-section">
+    <div class="section-header" style="text-align: center;">
+      <span style="color: var(--accent-volt); text-transform: uppercase; font-weight: 700; letter-spacing: 2px;">MEMBERSHIP PLANS</span>
+      <h2>Choose Your Perfect Plan</h2>
+      <p>Select from our flexible membership plans and start your fitness journey today.</p>
+    </div>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div>
+          <h3>Basic</h3>
+          <p>Perfect for getting started.</p>
+          <div class="price">$49<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>Access to gym facilities</li>
+            <li>Basic fitness programs</li>
+            <li>Community support</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Basic" class="btn btn-outline" style="width: 100%; justify-content: center; background: #fff; color: #000;">Select Plan</a>
+      </div>
+      <div class="pricing-card emphasised">
+        <div>
+          <h3>Pro</h3>
+          <p>For serious fitness & sports goals.</p>
+          <div class="price">$79<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>All Basic features</li>
+            <li>Personalised workout plan</li>
+            <li>1-on-1 trainer support</li>
+            <li>Priority booking</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Pro" class="btn btn-primary" style="width: 100%; justify-content: center; background: var(--accent-volt); color: #000;">Select Plan</a>
+      </div>
+      <div class="pricing-card">
+        <div>
+          <h3>Premium</h3>
+          <p>For the complete experience.</p>
+          <div class="price">$99<span>/month</span></div>
+          <ul class="pricing-features">
+            <li>All Pro features</li>
+            <li>Unlimited classes</li>
+            <li>Exclusive events</li>
+          </ul>
+        </div>
+        <a href="signup.html?plan=Premium" class="btn btn-outline" style="width: 100%; justify-content: center; background: #fff; color: #000;">Select Plan</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section-container">
+    <div class="section-header" style="text-align: center;">
+      <h2>Frequently Asked Questions</h2>
+      <p>Find quick answers to common questions</p>
+    </div>
+    <div class="faq-container">
+      <div class="faq-item active">
+        <div class="faq-question">Can I cancel my membership anytime? <span>▼</span></div>
+        <div class="faq-answer">Yes, you can cancel your membership at any time with no penalty through your member portal or by contacting support.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Do you offer a free trial? <span>▼</span></div>
+        <div class="faq-answer">Yes! We offer a 7-day free trial for new members to explore our facilities, classes, and expert trainers.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">What are the payment options? <span>▼</span></div>
+        <div class="faq-answer">We accept all major credit cards, debit cards, UPI, and net banking for monthly and annual membership billing.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Is there a joining fee? <span>▼</span></div>
+        <div class="faq-answer">No, there are zero joining fees when you sign up for any of our standard membership plans.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Are personal trainers included? <span>▼</span></div>
+        <div class="faq-answer">Personal trainer support is included in Pro and Premium plans. Basic members can book sessions separately.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-brand">
+        <img class="site-logo" src="img/logo.webp" alt="Logo">
+        <p class="footer-quote">Train with purpose. Build strength for life.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="programs.html">Programs</a></li>
+          <li><a href="sports.html">Sports</a></li>
+          <li><a href="membership.html">Membership</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Support</h4>
+        <ul>
+          <li><a href="dashboard.html#faq">Help Center</a></li>
+          <li><a href="dashboard.html#contact-support">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Follow Us</h4>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="18" cy="6" r="1" fill="currentColor" stroke="none"></circle></svg></a>
+          <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg class="icon-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 8.6H2V22h3.2V8.6ZM3.6 2a1.9 1.9 0 1 0 0 3.8 1.9 1.9 0 0 0 0-3.8ZM22 14.3c0-4-2.1-5.9-4.9-5.9a4.2 4.2 0 0 0-3.8 2.1V8.6h-3.1V22h3.2v-6.6c0-1.7.3-3.4 2.5-3.4s2.2 2 2.2 3.5V22h3.2l.7-7.7Z"></path></svg></a>
+          <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><svg class="icon-solid" viewBox="0 0 24 24" aria-hidden="true"><path d="M13.5 22v-9h3l.5-3.5h-3.5V7.3c0-1 .3-1.7 1.8-1.7h1.9V2.5c-.9-.1-1.9-.2-2.9-.2-2.9 0-4.9 1.8-4.9 5v2.2H6.2V13h3.2v9h4.1Z"></path></svg></a>
+          <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="4"></rect><path d="m10 9 5 3-5 3z" fill="currentColor" stroke="none"></path></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">&copy; <span id="footer-year">2026</span> Pulse Athletics. All Rights Reserved.</p>
+      <nav class="footer-legal" aria-label="Legal links">
+        <a href="dashboard.html#terms">Terms</a>
+        <a href="dashboard.html#privacy">Privacy</a>
+        <a href="dashboard.html#cookies">Cookies</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
